@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String SORT = "reputation";
     private static final String SITE = "stackoverflow";
 
+    private static final String CACHE_MESSAGE = "CACHE";
+    private static final String PERSISTENT_STORAGE_MESSAGE = "PERSISTENT_STORAGE_MESSAGE";
+    private static final int CACHE_MINUTES = 10;
+    private static final int PERSISTENT_STORAGE_MINUTES = 30;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
