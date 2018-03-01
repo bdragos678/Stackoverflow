@@ -1,11 +1,14 @@
 package com.example.bdrag.stackoverflow;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
                         adapter.clear();
                         adapter.addAll(items);
+
+                        SaveDataAsyncTask task = new SaveDataAsyncTask();
+                        task.execute();
                     }
                 }
 
@@ -80,14 +86,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class SaveData extends AsyncTask<Void, Void, Void>{
+    private class SaveDataAsyncTask extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... voids) {
 
             for(int i=0;i<items.size();i++){
 
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                Bitmap imagine = ImageHelper.getImageBitmap(items.get(i).getProfileImage());
+                imagine.compress(Bitmap.CompressFormat.PNG, 100, out);
+                String image64 = Base64.encodeToString(out.toByteArray(), Base64.DEFAULT);
+
+                items.get(i).setImageBase64(image64);
             }
+
+            SaveReadDataToCacheOrPersistentStorage.writeObject(MainActivity.this, items, CACHE_MESSAGE);
+            SaveReadDataToCacheOrPersistentStorage.writeObject(MainActivity.this, items, PERSISTENT_STORAGE_MESSAGE);
 
             return null;
         }
