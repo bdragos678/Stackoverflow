@@ -1,5 +1,6 @@
 package com.example.bdrag.stackoverflow;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
@@ -77,7 +78,18 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Toast.makeText(MainActivity.this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
         }
+    }
 
+    private class SaveData extends AsyncTask<Void, Void, Void>{
 
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            for(int i=0;i<items.size();i++){
+
+            }
+
+            return null;
+        }
     }
 }
